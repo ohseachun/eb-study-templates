@@ -1,0 +1,20 @@
+version: "3.9"
+services:
+  db:
+    container_name: "study-db"
+    image: mariadb:10
+    volumes:
+      #마운트 작업 로컬 <-> 도커 컨테이너
+      - "../storage/data:/var/lib/mysql"
+      - "../utils/database/init.sql:/data/application/init.sql"
+    command: --init-file /data/application/init.sql
+    environment:
+      TZ: Asia/Seoul
+      MYSQL_ROOT_PASSWORD: qwer1234
+      MYSQL_DATABASE: study_schema
+    ports:
+      #포트포워딩 할 포트 설정
+      - "3308:3306"
+    restart: always
+
+##Tomcat 9.0.10 으로 설치 ->> ../docs/was 밑에 있음
